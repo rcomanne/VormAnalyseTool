@@ -8,19 +8,13 @@ import nl.avans.panel.*;
 public class VormAnalyseTool extends JFrame {
 
     public static void main(String[] args) {
-        JFrame vormApplicatie = new MainFrame();
-
-        JFrame blokPopup = new PopupFrame();
-        blokPopup.setLocation(900, 300);
-        blokPopup.setSize(200, 200);
-        blokPopup.setTitle("Nieuwe vorm");
-        blokPopup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        MainFrame vormApplicatie = new MainFrame();
 
         vormApplicatie.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vormApplicatie.setTitle("Vorm Analyse Tool");
+        vormApplicatie.setTitle("Shape Analyse Tool");
         vormApplicatie.setLocation(500, 300);
-        vormApplicatie.setSize(400, 400);
-        vormApplicatie.setContentPane(new MainPanel());
+        vormApplicatie.setSize(500, 500);
+        vormApplicatie.setContentPane(new MainPanel(vormApplicatie));
         vormApplicatie.setVisible(true);
     }
 }

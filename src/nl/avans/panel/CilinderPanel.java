@@ -11,9 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BolPanel extends MainPanel {
-    private JLabel radiusLabel;
-    private JTextField radiusField;
+public class CilinderPanel extends MainPanel {
+    private JLabel radiusLabel, heightLabel;
+    private JTextField radiusField, heightField;
     private JButton saveButton;
     private MainFrame frame;
     private PopupFrame popupFrame;
@@ -21,25 +21,32 @@ public class BolPanel extends MainPanel {
     private ConversionService conversionService;
     private ShapeController shapeController;
 
-    public BolPanel(MainFrame mainFrame, PopupFrame popupFrame) {
+    public CilinderPanel(MainFrame mainFrame, PopupFrame popupFrame) {
         frame = mainFrame;
-        this.popupFrame  = popupFrame;
+        this.popupFrame = popupFrame;
         conversionService = frame.conversionService;
         shapeController = frame.shapeController;
+
         Border border = BorderFactory.createEmptyBorder(10,10,10,10);
         setBorder(border);
         Color lightBlue = new Color(109, 201, 255);
         setBackground(lightBlue);
-        setLayout(new GridLayout(3,1, 20, 20));
+        setLayout(new GridLayout(3,2, 20, 20));
 
-        radiusLabel = new JLabel("Straal:", SwingConstants.CENTER);
+
+        radiusLabel = new JLabel("Straal:");
         radiusField = new JTextField();
+
+        heightLabel = new JLabel("Hoogte:");
+        heightField = new JTextField();
 
         saveButton = new JButton("Opslaan");
         saveButton.addActionListener(new SaveListener());
 
         add(radiusLabel);
         add(radiusField);
+        add(heightLabel);
+        add(heightField);
 
         add(saveButton);
     }
@@ -47,11 +54,12 @@ public class BolPanel extends MainPanel {
     class SaveListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            double radius;
+            double height, radius;
             boolean shapeSaved = false;
             while (!shapeSaved) {
                 radius = conversionService.convertStringToDouble(radiusField);
-                shapeSaved = shapeController.saveShape(radius);
+                height = conversionService.convertStringToDouble(heightField);
+                shapeSaved = shapeController.saveShape(radius, height);
             }
             popupFrame.setVisible(false);
             popupFrame.dispose();

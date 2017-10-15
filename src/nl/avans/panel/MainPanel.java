@@ -1,45 +1,65 @@
 package nl.avans.panel;
 
-import nl.avans.shape.Vorm;
+import nl.avans.businesslogic.ShapeController;
+import nl.avans.businesslogic.service.ConversionService;
+import nl.avans.domain.Shape;
+import nl.avans.frame.MainFrame;
+import nl.avans.frame.PopupFrame;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class MainPanel  extends JPanel{
-    JLabel shapeLabel, inhoudLabel ,totalLabel;
-    JButton saveButton, removeButton, loadButton, totalButton;
-    JComboBox<String> shapeCombo;
-    JTextField inhoudField, totalField;
-    JList<Vorm> shapeList;
-    JScrollPane shapeScrollPane;
+    private JLabel saveLabel, volumeLabel,totalLabel;
+    private JButton removeButton, loadButton, totalButton;
+    private JTextField volumeField, totalField;
+    private JList<Shape> shapeList;
+    private JScrollPane shapeScrollPane;
+    private Choice choices;
+    private MainFrame frame;
 
-    public MainPanel() {
+    private ConversionService conversionService;
+    private ShapeController shapeController;
+
+    MainPanel() {
+        // Empty default constructor
+    }
+
+    public MainPanel(MainFrame mainFrame) {
+        frame = mainFrame;
+        conversionService = frame.conversionService;
+        shapeController = frame.shapeController;
         Border border = BorderFactory.createEmptyBorder(10,10,10,10);
         setBorder(border);
         Color lightBlue = new Color(109, 201, 255);
         setBackground(lightBlue);
         setLayout(new GridLayout(8,2, 20, 20));
 
+        saveLabel = new JLabel("Kies een vorm om een vorm te maken");
+        choices = new Choice();
+        choices.add("Blok");
+        choices.add("Bol");
+        choices.add("Cilinder");
 
-        shapeLabel = new JLabel("Vorm:", SwingConstants.RIGHT);
-        String[] choices = {"Bol", "Blok", "Cilinder"};
-        shapeCombo = new JComboBox<String>(choices);
+        choices.addItemListener(new ChoiceListener());
 
-        inhoudLabel = new JLabel("Inhoud:", SwingConstants.RIGHT);
-        inhoudField = new JTextField("0.0");
-        inhoudField.setEditable(false);
+        volumeLabel = new JLabel("Inhoud:", SwingConstants.RIGHT);
+        volumeField = new JTextField("0.0");
+        volumeField.setEditable(false);
 
         totalLabel = new JLabel("Totale inhoud:", SwingConstants.RIGHT);
         totalField = new JTextField("0.0");
         totalField.setEditable(false);
 
-        saveButton = new JButton("Opslaan");
-        saveButton.setSize(30, 30);
         loadButton = new JButton("Laad");
         loadButton.setSize(30, 30);
 
-        shapeList = new JList<Vorm>();
+        shapeList = new JList<>();
         shapeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         shapeList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         shapeList.setVisibleRowCount(-1);
@@ -47,20 +67,68 @@ public class MainPanel  extends JPanel{
         shapeScrollPane.setPreferredSize(new Dimension(40, 80));
 
         totalButton = new JButton("Total inhoud");
+        totalButton.addActionListener(new TotalVolumeListener());
         removeButton = new JButton("Verwijder");
 
-        add(shapeLabel);
-        add(shapeCombo);
-        add(inhoudLabel);
-        add(inhoudField);
+        add(saveLabel);
+        add(choices);
+        add(volumeLabel);
+        add(volumeField);
         add(totalLabel);
         add(totalField);
-        add(saveButton);
+        add(new JLabel());
+        add(totalButton);
         add(loadButton);
         add(shapeScrollPane);
         add(removeButton);
-        add(new JLabel());
-        add(totalButton);
+    }
 
+    class ChoiceListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            String choice = choices.getSelectedItem();
+            createPopup(choice);
+        }
+    }
+
+    class TotalVolumeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            double volume = conversionService.round(shapeController.getTotalVolume(), 2);
+            totalField.setText("" + volume);
+        }
+    }
+
+    private void createPopup(String shapeName) {
+        PopupFrame popupFrame = new PopupFrame();
+        popupFrame.setLocation(1000, 300);
+        popupFrame.setSize(400, 200);
+        popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        switch (shapeName) {
+            case "Bol":
+                createBolPanel(popupFrame);
+                break;
+            case "Blok":
+                createBlokPanel(popupFrame);
+                break;
+            case "Cilinder":
+                createCilinderPanel(popupFrame);
+                break;
+        }
+        popupFrame.setVisible(true);
+    }
+
+    private void createBolPanel (PopupFrame popupFrame) {
+        popupFrame.setTitle("Bol");
+        popupFrame.setContentPane(new BolPanel(frame, popupFrame));
+    }
+
+    private void createBlokPanel (PopupFrame popupFrame) {
+        popupFrame.setTitle("Blok");
+        popupFrame.setContentPane(new BlokPanel(frame, popupFrame));
+    }
+    private void createCilinderPanel (PopupFrame popupFrame) {
+        popupFrame.setTitle("Cilinder");
+        popupFrame.setContentPane(new CilinderPanel(frame, popupFrame));
     }
 }
