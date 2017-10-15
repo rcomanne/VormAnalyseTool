@@ -13,13 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 
 public class MainPanel  extends JPanel{
     private JLabel saveLabel, volumeLabel,totalLabel;
     private JButton removeButton, loadButton, totalButton;
     private JTextField volumeField, totalField;
-    private JList<Shape> shapeList;
-    private JScrollPane shapeScrollPane;
+    private List shapeList;
     private Choice choices;
     private MainFrame frame;
 
@@ -45,6 +45,8 @@ public class MainPanel  extends JPanel{
         choices.add("Blok");
         choices.add("Bol");
         choices.add("Cilinder");
+        choices.add("Piramide");
+        choices.add("Kegel");
 
         choices.addItemListener(new ChoiceListener());
 
@@ -56,19 +58,21 @@ public class MainPanel  extends JPanel{
         totalField = new JTextField("0.0");
         totalField.setEditable(false);
 
-        loadButton = new JButton("Laad");
-        loadButton.setSize(30, 30);
+        loadButton = new JButton("Toon Lijst");
+        loadButton.addActionListener(new ShowListListener());
 
-        shapeList = new JList<>();
-        shapeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        shapeList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        shapeList.setVisibleRowCount(-1);
-        shapeScrollPane = new JScrollPane(shapeList);
-        shapeScrollPane.setPreferredSize(new Dimension(40, 80));
+        try {
+            shapeController.getShapesFromData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        shapeList = shapeController.getShapesList();
+        shapeList.addItemListener(new SelectedShapeListener());
 
         totalButton = new JButton("Total inhoud");
         totalButton.addActionListener(new TotalVolumeListener());
         removeButton = new JButton("Verwijder");
+        removeButton.addActionListener(new RemoveShapeListener());
 
         add(saveLabel);
         add(choices);
@@ -79,8 +83,16 @@ public class MainPanel  extends JPanel{
         add(new JLabel());
         add(totalButton);
         add(loadButton);
-        add(shapeScrollPane);
+        add(shapeList);
         add(removeButton);
+    }
+
+    class SelectedShapeListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            Shape selectedShape = shapeController.getShapeArrayList().get(shapeList.getSelectedIndex());
+            volumeField.setText(conversionService.round(selectedShape.getVolume(), 2)+"");
+        }
     }
 
     class ChoiceListener implements ItemListener {
@@ -99,6 +111,30 @@ public class MainPanel  extends JPanel{
         }
     }
 
+    class ShowListListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            shapeList = shapeController.getShapesList();
+
+//            if (shapeList != null) {
+//                shapeList.removeAll();
+//            } else {
+//                shapeList = new List();
+//            }
+//            for (Shape shape : shapeController.getShapeArrayList()) {
+//                shapeList.add(shape.toString());
+//            }
+        }
+    }
+
+    class RemoveShapeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            shapeController.removeShape(shapeList.getSelectedIndex());
+            renewList();
+        }
+    }
+
     private void createPopup(String shapeName) {
         PopupFrame popupFrame = new PopupFrame();
         popupFrame.setLocation(1000, 300);
@@ -112,7 +148,13 @@ public class MainPanel  extends JPanel{
                 createBlokPanel(popupFrame);
                 break;
             case "Cilinder":
-                createCilinderPanel(popupFrame);
+                createCylinderPanel(popupFrame);
+                break;
+            case "Piramide":
+                createPyramidePanel(popupFrame);
+                break;
+            case "Kegel":
+                createKegelPanel(popupFrame);
                 break;
         }
         popupFrame.setVisible(true);
@@ -120,15 +162,29 @@ public class MainPanel  extends JPanel{
 
     private void createBolPanel (PopupFrame popupFrame) {
         popupFrame.setTitle("Bol");
-        popupFrame.setContentPane(new BolPanel(frame, popupFrame));
+        popupFrame.setContentPane(new BolPanel(frame, popupFrame, this));
     }
 
     private void createBlokPanel (PopupFrame popupFrame) {
         popupFrame.setTitle("Blok");
-        popupFrame.setContentPane(new BlokPanel(frame, popupFrame));
+        popupFrame.setContentPane(new BlokPanel(frame, popupFrame, this));
     }
-    private void createCilinderPanel (PopupFrame popupFrame) {
-        popupFrame.setTitle("Cilinder");
-        popupFrame.setContentPane(new CilinderPanel(frame, popupFrame));
+    private void createCylinderPanel(PopupFrame popupFrame) {
+        popupFrame.setTitle("Cylinder");
+        popupFrame.setContentPane(new CylinderPanel(frame, popupFrame, this));
+    }
+
+    private void createPyramidePanel (PopupFrame popupFrame) {
+        popupFrame.setTitle("Piramide");
+        popupFrame.setContentPane(new PyramidPanel(frame, popupFrame, this));
+    }
+
+    private void createKegelPanel (PopupFrame popupFrame) {
+        popupFrame.setTitle("Kegel");
+        popupFrame.setContentPane(new ConePanel(frame, popupFrame, this));
+    }
+
+    public void renewList () {
+        loadButton.doClick();
     }
 }

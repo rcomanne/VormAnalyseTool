@@ -1,6 +1,8 @@
 package nl.avans.domain;
 
-public abstract class Shape {
+import java.io.Serializable;
+
+public abstract class Shape implements Serializable {
     double volume;
     double pi = Math.PI;
 

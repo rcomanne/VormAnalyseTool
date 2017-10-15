@@ -17,12 +17,14 @@ public class BolPanel extends MainPanel {
     private JButton saveButton;
     private MainFrame frame;
     private PopupFrame popupFrame;
+    private MainPanel panel;
 
     private ConversionService conversionService;
     private ShapeController shapeController;
 
-    public BolPanel(MainFrame mainFrame, PopupFrame popupFrame) {
+    public BolPanel(MainFrame mainFrame, PopupFrame popupFrame, MainPanel mainPanel) {
         frame = mainFrame;
+        panel = mainPanel;
         this.popupFrame  = popupFrame;
         conversionService = frame.conversionService;
         shapeController = frame.shapeController;
@@ -51,9 +53,9 @@ public class BolPanel extends MainPanel {
             boolean shapeSaved = false;
             while (!shapeSaved) {
                 radius = conversionService.convertStringToDouble(radiusField);
-                shapeSaved = shapeController.saveShape(radius);
+                shapeSaved = shapeController.saveSphere(radius);
             }
-            popupFrame.setVisible(false);
+            panel.renewList();
             popupFrame.dispose();
         }
     }

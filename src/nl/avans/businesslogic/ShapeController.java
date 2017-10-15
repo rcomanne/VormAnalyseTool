@@ -1,59 +1,148 @@
 package nl.avans.businesslogic;
 
+import nl.avans.businesslogic.service.DataFileOutService;
 import nl.avans.domain.*;
+import nl.avans.domain.Shape;
 
+import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ShapeController {
-    private ArrayList<Shape> shapeCollection;
+    private ArrayList<Shape> shapeArrayList;
+    private List shapesList;
 
     public ShapeController () {
-        shapeCollection = new ArrayList<>();
+        shapeArrayList = new ArrayList<>();
+        shapesList = new List();
+    }
+
+    public ArrayList<Shape> getShapeArrayList() {
+        return shapeArrayList;
+    }
+
+    public List getShapesList () {
+        if (shapesList != null) {
+            shapesList.removeAll();
+        }
+        for (Shape shape : shapeArrayList) {
+            shapesList.add(shape.toString());
+        }
+        return shapesList;
+    }
+
+    public void getShapesFromData () throws IOException {
+        ArrayList<Shape> shapes = new ArrayList<>();
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream("C:/Development/VormAnalyseTool/data/shapes.data");
+            ois = new ObjectInputStream(fis);
+            while (fis.available() > 0) {
+                shapes.add((Shape) ois.readObject());
+            }
+        } catch (EOFException eof) {
+            // End of file reached
+            setShapeArrayList(shapes);
+            System.out.println("End of file.");
+        } catch (FileNotFoundException fne) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassCastException cce) {
+            System.out.println("Something went wrong");
+            cce.printStackTrace();
+        } catch (ClassNotFoundException cnf) {
+
+        }
+        finally {
+            if (fis != null) {
+                fis.close();
+            }
+            if (ois != null) {
+                ois.close();
+            }
+            setShapeArrayList(shapes);
+        }
+    }
+
+    public void setShapesList(List shapesList) {
+        this.shapesList = shapesList;
+    }
+
+    public void setShapeArrayList(ArrayList<Shape> shapeArrayList) {
+        this.shapeArrayList = shapeArrayList;
     }
 
     public double getTotalVolume() {
         double total = 0;
-        for (Shape shape : shapeCollection) {
+        for (Shape shape : shapeArrayList) {
             total += shape.getVolume();
         }
         return total;
     }
 
     private boolean addShape (Shape shape) {
-        return shapeCollection.add(shape);
+        return shapeArrayList.add(shape);
     }
 
     public void removeShape (int index) {
-        if (!shapeCollection.isEmpty()) {
-            shapeCollection.remove(index);
+        if (!shapeArrayList.isEmpty()) {
+            shapeArrayList.remove(index);
         }
     }
 
     public Shape getShape (int index) {
-        return shapeCollection.get(index);
+        return shapeArrayList.get(index);
     }
 
-    public boolean saveShape (double length, double height, double width) {
+    public boolean writeShape (Shape shape) {
+        try {
+            new DataFileOutService(shape);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public boolean saveCube(double length, double height, double width) {
         if (length != 0 && height != 0 && width != 0) {
-            Shape blok = new Blok(length, width, height);
-            return addShape(blok);
+            Shape cube = new Cube(length, width, height);
+            return addShape(cube) && writeShape(cube);
         }
         return false;
     }
 
-    public boolean saveShape (double height, double radius) {
+    public boolean saveCylinder(double height, double radius) {
         if (radius != 0 && height != 0) {
-            Shape cilinder = new Cilinder(height, radius);
-            return addShape(cilinder);
+            Shape cylinder = new Cylinder(height, radius);
+            return addShape(cylinder) && writeShape(cylinder);
         }
         return false;
     }
 
-    public boolean saveShape (double radius) {
+    public boolean saveSphere (double radius) {
         if (radius != 0) {
-            Shape bol = new Bol(radius);
-            return addShape(bol);
+            Shape sphere = new Sphere(radius);
+            return addShape(sphere) && writeShape(sphere);
         }
         return false;
     }
+
+    public boolean savePyramid (double base, double height) {
+        if (base != 0 && height != 0) {
+            Shape pyramid = new Pyramid(base, height);
+            return addShape(pyramid) && writeShape(pyramid);
+        }
+        return false;
+    }
+
+    public boolean saveCone (double radius, double height) {
+        if (radius != 0 && height != 0) {
+            Shape cone = new Cone(radius, height);
+            return addShape(cone) && writeShape(cone);
+        }
+        return false;
+    }
+
 }
