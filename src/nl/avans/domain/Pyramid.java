@@ -9,7 +9,7 @@ public class Pyramid extends Shape {
     public Pyramid(double baseArea, double height) {
         this.baseArea = baseArea;
         this.height = height;
-        this.volume = ConversionService.staticRound(this.calculate(), 2);
+        this.volume = ConversionService.staticRound(this.calculate());
 
     }
 

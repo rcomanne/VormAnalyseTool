@@ -1,6 +1,7 @@
 package nl.avans.businesslogic;
 
 import nl.avans.businesslogic.service.DataFileOutService;
+import nl.avans.businesslogic.service.TextOutService;
 import nl.avans.domain.*;
 import nl.avans.domain.Shape;
 
@@ -43,7 +44,6 @@ public class ShapeController {
             }
         } catch (EOFException eof) {
             // End of file reached
-            setShapeArrayList(shapes);
             System.out.println("End of file.");
         } catch (FileNotFoundException fne) {
             System.out.println("File not found.");
@@ -53,7 +53,7 @@ public class ShapeController {
             System.out.println("Something went wrong");
             cce.printStackTrace();
         } catch (ClassNotFoundException cnf) {
-
+            cnf.printStackTrace();
         }
         finally {
             if (fis != null) {
@@ -66,11 +66,7 @@ public class ShapeController {
         }
     }
 
-    public void setShapesList(List shapesList) {
-        this.shapesList = shapesList;
-    }
-
-    public void setShapeArrayList(ArrayList<Shape> shapeArrayList) {
+    private void setShapeArrayList(ArrayList<Shape> shapeArrayList) {
         this.shapeArrayList = shapeArrayList;
     }
 
@@ -82,7 +78,7 @@ public class ShapeController {
         return total;
     }
 
-    private boolean addShape (Shape shape) {
+    public boolean addShape (Shape shape) {
         return shapeArrayList.add(shape);
     }
 
@@ -96,9 +92,10 @@ public class ShapeController {
         return shapeArrayList.get(index);
     }
 
-    public boolean writeShape (Shape shape) {
+    private boolean writeShape (Shape shape) {
         try {
             new DataFileOutService(shape);
+            new TextOutService(shape);
             return true;
         } catch (IOException e) {
             return false;
@@ -144,5 +141,4 @@ public class ShapeController {
         }
         return false;
     }
-
 }

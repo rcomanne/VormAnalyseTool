@@ -8,7 +8,7 @@ public class Cylinder extends Shape {
     public Cylinder(double height, double radius) {
         this.height = height;
         this.radius = radius;
-        this.volume = ConversionService.staticRound(this.calculate(), 2);
+        this.volume = ConversionService.staticRound(this.calculate());
 
     }
 

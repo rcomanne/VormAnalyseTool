@@ -91,7 +91,7 @@ public class MainPanel  extends JPanel{
         @Override
         public void itemStateChanged(ItemEvent e) {
             Shape selectedShape = shapeController.getShapeArrayList().get(shapeList.getSelectedIndex());
-            volumeField.setText(conversionService.round(selectedShape.getVolume(), 2)+"");
+            volumeField.setText(conversionService.round(selectedShape.getVolume())+"");
         }
     }
 
@@ -106,7 +106,7 @@ public class MainPanel  extends JPanel{
     class TotalVolumeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            double volume = conversionService.round(shapeController.getTotalVolume(), 2);
+            double volume = conversionService.round(shapeController.getTotalVolume());
             totalField.setText("" + volume);
         }
     }
@@ -115,15 +115,6 @@ public class MainPanel  extends JPanel{
         @Override
         public void actionPerformed(ActionEvent e) {
             shapeList = shapeController.getShapesList();
-
-//            if (shapeList != null) {
-//                shapeList.removeAll();
-//            } else {
-//                shapeList = new List();
-//            }
-//            for (Shape shape : shapeController.getShapeArrayList()) {
-//                shapeList.add(shape.toString());
-//            }
         }
     }
 
@@ -184,7 +175,7 @@ public class MainPanel  extends JPanel{
         popupFrame.setContentPane(new ConePanel(frame, popupFrame, this));
     }
 
-    public void renewList () {
+    void renewList () {
         loadButton.doClick();
     }
 }

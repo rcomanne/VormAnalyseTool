@@ -10,6 +10,9 @@ public class ConversionService {
     public double convertStringToDouble(JTextField textField) {
         try {
             textField.setBackground(Color.WHITE);
+            if (textField.getText().equals("")) {
+                return 0;
+            }
             return Double.parseDouble(textField.getText());
         } catch (NumberFormatException nfe) {
             textField.setBackground(Color.RED);
@@ -17,19 +20,17 @@ public class ConversionService {
         return 0;
     }
 
-    public double round (double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
+    public double round (double value) {
 
         BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 
-    public static double staticRound (double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
+    public static double staticRound(double value) {
 
         BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 }

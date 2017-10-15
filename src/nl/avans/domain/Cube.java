@@ -9,7 +9,7 @@ public class Cube extends Shape {
         this.length = length;
         this.width = width;
         this.height = height;
-        this.volume = ConversionService.staticRound(this.calculate(), 2);
+        this.volume = ConversionService.staticRound(this.calculate());
     }
 
     @Override

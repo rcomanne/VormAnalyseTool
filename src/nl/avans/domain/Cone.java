@@ -9,7 +9,7 @@ public class Cone extends Shape {
     public Cone(double radius, double height) {
         this.radius = radius;
         this.height = height;
-        this.volume = ConversionService.staticRound(this.calculate(), 2);
+        this.volume = ConversionService.staticRound(this.calculate());
     }
 
     @Override
@@ -17,7 +17,7 @@ public class Cone extends Shape {
         return "Kegel " + radius + height + " " + volume;
     }
 
-    private double calculate () {
+    double calculate () {
         return (CONSTANT * pi * (radius*radius) * height);
     }
 }

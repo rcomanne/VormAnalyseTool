@@ -8,7 +8,7 @@ public class Sphere extends Shape {
 
     public Sphere(double radius) {
         this.radius = radius;
-        this.volume = ConversionService.staticRound(this.calculate(), 2);
+        this.volume = ConversionService.staticRound(this.calculate());
     }
 
     @Override
