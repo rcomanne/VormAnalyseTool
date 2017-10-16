@@ -14,7 +14,7 @@ public class Cone extends Shape {
 
     @Override
     public String toString() {
-        return "Kegel " + radius + height + " " + volume;
+        return "Kegel " + radius + " " + height + " " + volume;
     }
 
     double calculate () {

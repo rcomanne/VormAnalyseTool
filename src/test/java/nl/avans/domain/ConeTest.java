@@ -18,7 +18,7 @@ public class ConeTest {
 
     @Test
     public void toStringTest() throws Exception {
-        assertEquals(cone.toString(),"Kegel 15.05.0 1178.1");
+        assertEquals("Kegel 15.0 5.0 1178.1", cone.toString());
     }
 
     @Test

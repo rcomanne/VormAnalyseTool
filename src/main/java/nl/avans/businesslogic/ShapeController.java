@@ -1,5 +1,6 @@
 package nl.avans.businesslogic;
 
+import nl.avans.businesslogic.database.LoadDriver;
 import nl.avans.businesslogic.service.DataFileOutService;
 import nl.avans.businesslogic.service.TextOutService;
 import nl.avans.domain.*;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class ShapeController {
     private ArrayList<Shape> shapeArrayList;
     private List shapesList;
+    private LoadDriver loadDriver;
 
     public ShapeController () {
         shapeArrayList = new ArrayList<>();
@@ -66,6 +68,11 @@ public class ShapeController {
         }
     }
 
+    public ArrayList<Shape> getShapesFromDatabase () {
+        loadDriver = new LoadDriver("root");
+        return loadDriver.getAllFromDatabase();
+    }
+
     private void setShapeArrayList(ArrayList<Shape> shapeArrayList) {
         this.shapeArrayList = shapeArrayList;
     }
@@ -78,7 +85,7 @@ public class ShapeController {
         return total;
     }
 
-    public boolean addShape (Shape shape) {
+    boolean addShape (Shape shape) {
         return shapeArrayList.add(shape);
     }
 

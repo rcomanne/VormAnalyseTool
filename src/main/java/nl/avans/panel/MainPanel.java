@@ -14,10 +14,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainPanel  extends JPanel{
     private JLabel saveLabel, volumeLabel,totalLabel;
-    private JButton removeButton, loadButton, totalButton;
+    private JButton removeButton, loadButton, totalButton, loadFromDBButton;
     private JTextField volumeField, totalField;
     private List shapeList;
     private Choice choices;
@@ -74,6 +75,9 @@ public class MainPanel  extends JPanel{
         removeButton = new JButton("Verwijder");
         removeButton.addActionListener(new RemoveShapeListener());
 
+        loadFromDBButton = new JButton("Laad in van database");
+        loadFromDBButton.addActionListener(new GetFromDatabaseListener());
+
         add(saveLabel);
         add(choices);
         add(volumeLabel);
@@ -85,6 +89,18 @@ public class MainPanel  extends JPanel{
         add(loadButton);
         add(shapeList);
         add(removeButton);
+        add(loadFromDBButton);
+    }
+
+    class GetFromDatabaseListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            shapeList.removeAll();
+            ArrayList<Shape> shapes = shapeController.getShapesFromDatabase();
+            for (Shape shape : shapes) {
+                shapeList.add(shape.toString());
+            }
+        }
     }
 
     class SelectedShapeListener implements ItemListener {

@@ -34,7 +34,7 @@ public class ShapeControllerTest {
     public void getShapesArrayListTest() throws Exception {
         assertEquals(generatedArrayList.size(), NR_OF_SHAPES);
         assertEquals(createdArrayList, generatedArrayList);
-        assertEquals(createdShapesList.getItems(), (generatedShapesList.getItems()));
+        assertEquals(createdShapesList.getItems(), generatedShapesList.getItems());
     }
 
     @Test
