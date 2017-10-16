@@ -1,11 +1,12 @@
 package nl.avans.businesslogic;
 
 import nl.avans.domain.*;
+import nl.avans.domain.Shape;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.List;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +34,7 @@ public class ShapeControllerTest {
     public void getShapesArrayListTest() throws Exception {
         assertEquals(generatedArrayList.size(), NR_OF_SHAPES);
         assertEquals(createdArrayList, generatedArrayList);
-        assertEquals(createdShapesList.getItems(), generatedShapesList.getItems());
+        assertEquals(createdShapesList.getItems(), (generatedShapesList.getItems()));
     }
 
     @Test
