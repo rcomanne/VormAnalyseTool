@@ -1,6 +1,7 @@
 package nl.avans.businesslogic;
 
-import nl.avans.businesslogic.database.LoadDriver;
+import nl.avans.businesslogic.database.LoadFromDatabaseService;
+import nl.avans.businesslogic.database.SaveToDatabaseService;
 import nl.avans.businesslogic.service.DataFileOutService;
 import nl.avans.businesslogic.service.TextOutService;
 import nl.avans.domain.*;
@@ -13,11 +14,14 @@ import java.util.ArrayList;
 public class ShapeController {
     private ArrayList<Shape> shapeArrayList;
     private List shapesList;
-    private LoadDriver loadDriver;
+    private LoadFromDatabaseService loadFromDatabaseService;
+    private SaveToDatabaseService saveToDatabaseService;
 
     public ShapeController () {
         shapeArrayList = new ArrayList<>();
         shapesList = new List();
+        loadFromDatabaseService = null;
+        saveToDatabaseService = null;
     }
 
     public ArrayList<Shape> getShapeArrayList() {
@@ -39,7 +43,7 @@ public class ShapeController {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
-            fis = new FileInputStream("C:/Development/VormAnalyseTool/data/shapes.data");
+            fis = new FileInputStream("data/shapes.data");
             ois = new ObjectInputStream(fis);
             while (fis.available() > 0) {
                 shapes.add((Shape) ois.readObject());
@@ -69,8 +73,13 @@ public class ShapeController {
     }
 
     public ArrayList<Shape> getShapesFromDatabase () {
-        loadDriver = new LoadDriver("root");
-        return loadDriver.getAllFromDatabase();
+        loadFromDatabaseService = new LoadFromDatabaseService("root");
+        return loadFromDatabaseService.getAllFromDatabase();
+    }
+
+    public boolean exportShapesToDatabase (ArrayList<Shape> shapes) {
+        saveToDatabaseService = new SaveToDatabaseService("root");
+        return saveToDatabaseService.saveAllToDatabase(shapes);
     }
 
     private void setShapeArrayList(ArrayList<Shape> shapeArrayList) {
@@ -119,7 +128,7 @@ public class ShapeController {
 
     public boolean saveCylinder(double height, double radius) {
         if (radius != 0 && height != 0) {
-            Shape cylinder = new Cylinder(height, radius);
+            Shape cylinder = new Cylinder(radius, height);
             return addShape(cylinder) && writeShape(cylinder);
         }
         return false;

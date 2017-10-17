@@ -31,19 +31,19 @@ public class ShapeControllerTest {
     }
 
     @Test
-    public void getShapesArrayListTest() throws Exception {
+    public void getShapesArrayListTest() {
         assertEquals(generatedArrayList.size(), NR_OF_SHAPES);
         assertEquals(createdArrayList, generatedArrayList);
         assertEquals(createdShapesList.getItems(), generatedShapesList.getItems());
     }
 
     @Test
-    public void getTotalVolumeTest() throws Exception {
+    public void getTotalVolumeTest() {
         assertEquals(shapeController.getTotalVolume(), VOLUME_OF_SHAPES, 0);
     }
 
     @Test
-    public void removeShapeTest() throws Exception {
+    public void removeShapeTest() {
         int initialSize = generatedArrayList.size();
         assertEquals(initialSize, 4);
         shapeController.removeShape(0);

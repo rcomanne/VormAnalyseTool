@@ -9,8 +9,9 @@ public class DataFileOutService {
 
     public DataFileOutService(Shape shape) throws IOException {
        try {
-           fileExists = new File("C:/Development/VormAnalyseTool/data/shapes.data").exists();
-           FileOutputStream fileOutputStream = new FileOutputStream("C:/Development/VormAnalyseTool/data/shapes.data", true);
+           new File("data").mkdir();
+           fileExists = new File("data/shapes.data").exists();
+           FileOutputStream fileOutputStream = new FileOutputStream("data/shapes.data", true);
            ObjectOutputStream objectOutputStream = fileExists ?
                    new ObjectOutputStream(fileOutputStream) {
                        protected void writeStreamHeader() throws IOException {

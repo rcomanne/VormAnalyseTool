@@ -17,12 +17,12 @@ public class ConeTest {
     }
 
     @Test
-    public void toStringTest() throws Exception {
+    public void toStringTest() {
         assertEquals("Kegel 15.0 5.0 1178.1", cone.toString());
     }
 
     @Test
-    public void calculate() throws Exception {
+    public void calculate() {
         assertEquals(ConversionService.staticRound(secondCone.calculate()), secondCone.getVolume(), 0);
     }
 

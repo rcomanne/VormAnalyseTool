@@ -11,6 +11,10 @@ public class Sphere extends Shape {
         this.volume = ConversionService.staticRound(this.calculate());
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
     @Override
     public String toString() {
         return "Sphere " + radius + " " + volume;

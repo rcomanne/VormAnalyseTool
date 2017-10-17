@@ -13,6 +13,14 @@ public class Pyramid extends Shape {
 
     }
 
+    public double getBaseArea() {
+        return baseArea;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
     @Override
     public String toString() {
         return "Pyramide " + baseArea + " " + height + " " + volume;

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MainPanel  extends JPanel{
     private JLabel saveLabel, volumeLabel,totalLabel;
-    private JButton removeButton, loadButton, totalButton, loadFromDBButton;
+    private JButton removeButton, loadButton, totalButton, loadFromDBButton, saveToDBButton;
     private JTextField volumeField, totalField;
     private List shapeList;
     private Choice choices;
@@ -41,7 +41,7 @@ public class MainPanel  extends JPanel{
         setBackground(lightBlue);
         setLayout(new GridLayout(8,2, 20, 20));
 
-        saveLabel = new JLabel("Kies een vorm om een vorm te maken");
+        saveLabel = new JLabel("Kies een vorm om een vorm te maken", SwingConstants.RIGHT);
         choices = new Choice();
         choices.add("Blok");
         choices.add("Bol");
@@ -78,6 +78,9 @@ public class MainPanel  extends JPanel{
         loadFromDBButton = new JButton("Laad in van database");
         loadFromDBButton.addActionListener(new GetFromDatabaseListener());
 
+        saveToDBButton = new JButton("Exporteer naar database");
+        saveToDBButton.addActionListener(new ExportToDatabaseListener());
+
         add(saveLabel);
         add(choices);
         add(volumeLabel);
@@ -90,6 +93,14 @@ public class MainPanel  extends JPanel{
         add(shapeList);
         add(removeButton);
         add(loadFromDBButton);
+        add(saveToDBButton);
+    }
+
+    class ExportToDatabaseListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            shapeController.exportShapesToDatabase(shapeController.getShapeArrayList());
+        }
     }
 
     class GetFromDatabaseListener implements ActionListener {

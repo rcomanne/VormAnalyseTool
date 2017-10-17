@@ -6,22 +6,13 @@ import nl.avans.domain.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class LoadDriver {
-    private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
-    private final String password = "";
-    private String username;
+public class LoadFromDatabaseService extends DatabaseService {
 
-    public LoadDriver(String username) {
+    public LoadFromDatabaseService(String username) {
         connection = null;
         statement = null;
         resultSet = null;
         this.username = username;
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 
     public ArrayList<Shape> getAllFromDatabase () {
@@ -34,7 +25,7 @@ public class LoadDriver {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1/shapes",username, password);
         } catch (SQLException sqle) {
-            System.out.println("SQLException");
+            System.out.println("SQL Connection Exception");
             sqle.printStackTrace();
         }
         try {
@@ -56,24 +47,7 @@ public class LoadDriver {
         }
         // Close resources
         finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException sqle) {
-                    sqle.printStackTrace();
-                    System.out.println("Closing resultset exception");
-                }
-                resultSet = null;
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    sqle.printStackTrace();
-                    System.out.println("Closing statement exception");
-                }
-                statement = null;
-            }
+            this.closeResources();
         }
         // Something went wrong
         return new ArrayList<>();
@@ -87,7 +61,7 @@ public class LoadDriver {
             case "Cube":
                 return new Cube(radius, width, height);
             case "Cylinder":
-                return new Cylinder(height, radius);
+                return new Cylinder(radius, height);
             case "Pyramid":
                 return new Pyramid(radius, height);
             case "Sphere":

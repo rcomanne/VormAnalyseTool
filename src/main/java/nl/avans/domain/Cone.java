@@ -12,6 +12,14 @@ public class Cone extends Shape {
         this.volume = ConversionService.staticRound(this.calculate());
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
     @Override
     public String toString() {
         return "Kegel " + radius + " " + height + " " + volume;
