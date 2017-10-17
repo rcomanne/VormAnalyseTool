@@ -109,13 +109,9 @@ public class ShapeController {
     }
 
     private boolean writeShape (Shape shape) {
-        try {
-            new DataFileOutService(shape);
-            new TextOutService(shape);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+        new DataFileOutService(shape);
+        new TextOutService(shape);
+        return true;
     }
 
     public boolean saveCube(double length, double height, double width) {

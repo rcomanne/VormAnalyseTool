@@ -44,6 +44,7 @@ public class BolPanel extends MainPanel {
         add(radiusField);
 
         add(saveButton);
+        popupFrame.getRootPane().setDefaultButton(saveButton);
     }
 
     class SaveListener implements ActionListener {

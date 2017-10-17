@@ -55,45 +55,45 @@ public class SaveToDatabaseService extends DatabaseService {
         if (shape instanceof Cone) {
             Cone cone = (Cone)shape;
             query.
-                append("'Cone', ").
-                append(shape.getVolume()+", ").
-                append(cone.getRadius()+", ").
-                append(cone.getHeight()+", ").
-                append("0.0)");
+                    append("'Cone', ").
+                    append(shape.getVolume()).append(", ").
+                    append(cone.getRadius()).append(", ").
+                    append(cone.getHeight()).append(", ").
+                    append("0.0)");
             return query.toString();
         } else if (shape instanceof Cube) {
             Cube cube = (Cube) shape;
             query.
-                append("'Cube', ").
-                append(cube.getVolume()+", ").
-                append(cube.getLength()+", ").
-                append(cube.getHeight()+", ").
-                append(cube.getWidth()+")");
+                    append("'Cube', ").
+                    append(cube.getVolume()).append(", ").
+                    append(cube.getLength()).append(", ").
+                    append(cube.getHeight()).append(", ").
+                    append(cube.getWidth()).append(")");
             return query.toString();
         } else if (shape instanceof Cylinder) {
             Cylinder cylinder = (Cylinder) shape;
             query.
-                append("'Cylinder', ").
-                append(cylinder.getVolume()+", ").
-                append(cylinder.getRadius()+", ").
-                append(cylinder.getHeight()+", ").
+                    append("'Cylinder', ").
+                    append(cylinder.getVolume()).append(", ").
+                    append(cylinder.getRadius()).append(", ").
+                    append(cylinder.getHeight()).append(", ").
                 append("0.0)");
             return query.toString();
         } else if (shape instanceof Pyramid) {
             Pyramid pyramid = (Pyramid) shape;
             query.
-                append("'Pyramid', ").
-                append(pyramid.getVolume()+", ").
-                append(pyramid.getBaseArea()+", ").
-                append(pyramid.getHeight()+", ").
+                    append("'Pyramid', ").
+                    append(pyramid.getVolume()).append(", ").
+                    append(pyramid.getBaseArea()).append(", ").
+                    append(pyramid.getHeight()).append(", ").
                 append("0.0)");
             return query.toString();
         } else if (shape instanceof Sphere) {
             Sphere sphere = (Sphere) shape;
             query.
                     append("'Sphere', ").
-                    append(sphere.getVolume()+", ").
-                    append(sphere.getRadius()+",").
+                    append(sphere.getVolume()).append(", ").
+                    append(sphere.getRadius()).append(",").
                     append("0.0, 0.0)");
             return query.toString();
         }

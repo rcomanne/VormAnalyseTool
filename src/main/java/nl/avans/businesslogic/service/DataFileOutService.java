@@ -7,7 +7,7 @@ import java.io.*;
 public class DataFileOutService {
     boolean fileExists;
 
-    public DataFileOutService(Shape shape) throws IOException {
+    public DataFileOutService(Shape shape) {
        try {
            new File("data").mkdir();
            fileExists = new File("data/shapes.data").exists();

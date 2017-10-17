@@ -10,7 +10,7 @@ public class VormAnalyseTool extends JFrame {
     public static void main(String[] args) {
         MainFrame vormApplicatie = new MainFrame();
 
-        vormApplicatie.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vormApplicatie.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         vormApplicatie.setTitle("Shape Analyse Tool");
         vormApplicatie.setLocation(500, 300);
         vormApplicatie.setSize(500, 500);

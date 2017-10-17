@@ -99,7 +99,11 @@ public class MainPanel  extends JPanel{
     class ExportToDatabaseListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            shapeController.exportShapesToDatabase(shapeController.getShapeArrayList());
+            if (shapeController.exportShapesToDatabase(shapeController.getShapeArrayList())) {
+                saveToDBButton.setBackground(Color.GREEN);
+            } else {
+                saveToDBButton.setBackground(Color.RED);
+            }
         }
     }
 
