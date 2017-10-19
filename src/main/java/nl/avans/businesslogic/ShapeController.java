@@ -104,7 +104,7 @@ public class ShapeController {
     }
 
     public void removeShape (int index) {
-        if (!shapeArrayList.isEmpty()) {
+        if (!shapeArrayList.isEmpty() && index >= 0) {
             shapeArrayList.remove(index);
         }
     }
