@@ -6,6 +6,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Sets up a database connection
+ */
+
 public class SaveToDatabaseService extends DatabaseService {
 
     public SaveToDatabaseService(String username) {
@@ -14,7 +18,11 @@ public class SaveToDatabaseService extends DatabaseService {
         this.username = username;
     }
 
-
+    /**
+     * saveAllToDatabase lets user save the current list to the local database
+     * @param shapes
+     * @return
+     */
     public boolean saveAllToDatabase (ArrayList<Shape> shapes) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -49,6 +57,11 @@ public class SaveToDatabaseService extends DatabaseService {
         }
     }
 
+    /**
+     * creates the query for the shape
+     * @param shape
+     * @return
+     */
     private String createSqlQuery (Shape shape) {
         StringBuilder query = new StringBuilder("INSERT INTO shapes VALUES(");
 

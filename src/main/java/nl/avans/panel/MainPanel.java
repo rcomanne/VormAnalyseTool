@@ -63,7 +63,7 @@ public class MainPanel  extends JPanel{
         loadButton.addActionListener(new ShowListListener());
 
         try {
-            shapeController.getShapesFromData();
+            shapeController.getShapesFromDataFile();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,6 +11,10 @@ import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * All the logic for the shapes, uses different services to save and retrieve shapes from different sources.
+ */
+
 public class ShapeController {
     private ArrayList<Shape> shapeArrayList;
     private List shapesList;
@@ -38,7 +42,7 @@ public class ShapeController {
         return shapesList;
     }
 
-    public void getShapesFromData () throws IOException {
+    public void getShapesFromDataFile () throws IOException {
         ArrayList<Shape> shapes = new ArrayList<>();
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -53,14 +57,15 @@ public class ShapeController {
             System.out.println("End of file.");
         } catch (FileNotFoundException fne) {
             System.out.println("File not found.");
+        }  catch (ClassNotFoundException cnf) {
+            cnf.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassCastException cce) {
-            System.out.println("Something went wrong");
+            System.out.println("Wrong input class");
             cce.printStackTrace();
-        } catch (ClassNotFoundException cnf) {
-            cnf.printStackTrace();
         }
+        // close resources and set the retrieved list as the currently used list in the application
         finally {
             if (fis != null) {
                 fis.close();

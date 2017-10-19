@@ -6,6 +6,10 @@ import nl.avans.domain.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Sets up a database connection
+ */
+
 public class LoadFromDatabaseService extends DatabaseService {
 
     public LoadFromDatabaseService(String username) {
@@ -15,6 +19,10 @@ public class LoadFromDatabaseService extends DatabaseService {
         this.username = username;
     }
 
+    /**
+     * getAllFromDatabase gets all the entries currently in the local database
+     * @return
+     */
     public ArrayList<Shape> getAllFromDatabase () {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();

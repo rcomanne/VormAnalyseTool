@@ -9,4 +9,6 @@ public abstract class Shape implements Serializable {
     public double getVolume() {
         return volume;
     }
+
+    public abstract double calculate ();
 }
