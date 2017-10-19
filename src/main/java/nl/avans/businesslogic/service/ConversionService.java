@@ -25,8 +25,8 @@ public class ConversionService {
 
     /**
      * Rounds the value to a value with 2 decimals
-     * @param value
-     * @return
+     * @param value value to round
+     * @return rounded value
      */
     public double round (double value) {
         BigDecimal bd = new BigDecimal(value);
@@ -36,8 +36,8 @@ public class ConversionService {
 
     /**
      * Rounds the value to a value with 2 decimals in a static context
-     * @param value
-     * @return
+     * @param value value to round
+     * @return rounded value
      */
     public static double staticRound(double value) {
         BigDecimal bd = new BigDecimal(value);

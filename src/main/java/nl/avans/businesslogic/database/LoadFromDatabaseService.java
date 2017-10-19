@@ -21,7 +21,7 @@ public class LoadFromDatabaseService extends DatabaseService {
 
     /**
      * getAllFromDatabase gets all the entries currently in the local database
-     * @return
+     * @return ArrayList with shapes
      */
     public ArrayList<Shape> getAllFromDatabase () {
         try {

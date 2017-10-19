@@ -20,8 +20,8 @@ public class SaveToDatabaseService extends DatabaseService {
 
     /**
      * saveAllToDatabase lets user save the current list to the local database
-     * @param shapes
-     * @return
+     * @param shapes shapes to save
+     * @return boolean value for succes of operation
      */
     public boolean saveAllToDatabase (ArrayList<Shape> shapes) {
         try {
@@ -59,8 +59,8 @@ public class SaveToDatabaseService extends DatabaseService {
 
     /**
      * creates the query for the shape
-     * @param shape
-     * @return
+     * @param shape shape to create a query for
+     * @return created query as String
      */
     private String createSqlQuery (Shape shape) {
         StringBuilder query = new StringBuilder("INSERT INTO shapes VALUES(");
